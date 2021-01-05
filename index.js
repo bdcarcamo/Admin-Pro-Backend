@@ -8,20 +8,18 @@ const { ConectionDB } = require('./database/config');
 const app = express();
 
 // Configurar CORS
-app.use(cors());
+app.use( cors() );
+
+// Lectura y parseo del body
+app.use( express.json() );
 
 // Base de datos
 ConectionDB();
 
 
 // Rutas
-app.get('/', ( req, resp ) => {
-
-    resp.json({
-        ok: true,
-        msg: 'hola mundo'
-    })
-});
+app.use( '/api/usuarios', require('./routes/usuarios') );
+app.use( '/api/login', require('./routes/auth') );
 
 
 app.listen( process.env.PORT, () => {
